@@ -1,12 +1,15 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Landing from './pages/Landing'
+import Landing  from './pages/Landing'
+import NotFound from './pages/NotFound'
 
-// We'll add more pages here later (Login, Dashboard etc)
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
+
+        {/* catch-all — this triggers the 404 page */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
