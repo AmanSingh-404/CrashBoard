@@ -31,12 +31,11 @@ const userSchema = new mongoose.Schema(
 
 // ── Hash password BEFORE saving to DB
 // This runs automatically every time a user is saved
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function () {
   // only hash if password was actually changed
-  if (!this.isModified('password')) return next()
+  if (!this.isModified('password')) return
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
-  next()
 })
 
 // ── Method to compare passwords on login

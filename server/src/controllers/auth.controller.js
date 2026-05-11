@@ -107,12 +107,15 @@ const login = async (req, res, next) => {
 // ── GET ME
 // GET /api/auth/me
 // requires: Bearer token in Authorization header
-const getMe = async (req, res) => {
-  // req.user is already attached by the protect middleware
-  res.status(200).json({
-    success: true,
-    user: req.user,
-  })
+const getMe = async (req, res, next) => {
+  try {
+    res.status(200).json({
+      success: true,
+      user: req.user,
+    })
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = { register, login, getMe }
