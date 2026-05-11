@@ -1,0 +1,48 @@
+const mongoose = require('mongoose')
+const bcrypt   = require('bcryptjs')
+
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'Name is required'],
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: [true, 'Email is required'],
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: [true, 'Password is required'],
+      minlength: [6, 'Password must be at least 6 characters'],
+      select: false, // never returned in queries by default
+    },
+    avatar: {
+      type: String,
+      default: '',
+    },
+  },
+  { timestamps: true } // adds createdAt and updatedAt automatically
+)
+
+// ── Hash password BEFORE saving to DB
+// This runs automatically every time a user is saved
+userSchema.pre('save', async function (next) {
+  // only hash if password was actually changed
+  if (!this.isModified('password')) return next()
+  const salt = await bcrypt.genSalt(10)
+  this.password = await bcrypt.hash(this.password, salt)
+  next()
+})
+
+// ── Method to compare passwords on login
+// Usage: const isMatch = await user.comparePassword(enteredPassword)
+userSchema.methods.comparePassword = async function (enteredPassword) {
+  return bcrypt.compare(enteredPassword, this.password)
+}
+
+module.exports = mongoose.model('User', userSchema)
