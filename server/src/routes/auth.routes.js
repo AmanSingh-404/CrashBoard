@@ -2,7 +2,7 @@ const express = require('express')
 const router  = express.Router()
 
 const { register, login, getMe } = require('../controllers/auth.controller')
-const { protect } = require('../middleware/auth')
+const { protect } = require('../middlewares/auth.middleware')
 
 // public routes — no token needed
 router.post('/register', register)

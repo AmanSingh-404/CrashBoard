@@ -1,5 +1,5 @@
 const jwt  = require('jsonwebtoken')
-const User = require('../models/User')
+const User = require('../models/User.models')
 const { JWT_SECRET } = require('../config/env')
 
 // helper — creates a signed JWT for a user

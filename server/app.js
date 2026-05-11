@@ -2,7 +2,7 @@ const express      = require('express')
 const cors         = require('cors')
 const helmet       = require('helmet')
 const morgan       = require('morgan')
-const errorHandler = require('./middleware/errorHandler')
+const errorHandler = require('./src/middlewares/errorHandler')
 
 const app = express()
 
@@ -26,12 +26,12 @@ app.get('/api/health', (req, res) => {
 })
 
 // ── Routes
-app.use('/api/auth',     require('./routes/auth.routes'))
-app.use('/api/projects', require('./routes/project.routes'))
-app.use('/api/ingest',   require('./routes/ingest.routes'))
-app.use('/api/errors',   require('./routes/error.routes'))
-app.use('/api/alerts',   require('./routes/alert.routes'))
-app.use('/api/team',     require('./routes/team.routes'))
+app.use('/api/auth',     require('./src/routes/auth.routes'))
+app.use('/api/projects', require('./src/routes/project.routes'))
+app.use('/api/ingest',   require('./src/routes/ingest.routes'))
+app.use('/api/errors',   require('./src/routes/error.routes'))
+app.use('/api/alerts',   require('./src/routes/alert.routes'))
+app.use('/api/team',     require('./src/routes/team.routes'))
 
 // ── Global error handler (must be last)
 app.use(errorHandler)
