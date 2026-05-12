@@ -24,7 +24,7 @@ export default function Footer() {
           marginTop: '24px', fontFamily: 'var(--mono)',
           fontSize: '10px', color: 'var(--dim)',
         }}>
-          Built by Aman Singh · 2025
+          Built by Aman Singh · 2026
         </div>
       </div>
 
@@ -57,7 +57,7 @@ export default function Footer() {
         color: 'var(--dim)',
         display: 'flex', alignItems: 'flex-end',
       }}>
-        © 2025 CrashBoard
+        © 2026 CrashBoard
       </div>
     </footer>
   )
