@@ -84,7 +84,7 @@ export default function Navbar() {
         <div style={styles.tag}>
           ● {errorCount.toLocaleString()} errors captured today
         </div>
-        <a href="#" style={styles.cta}>Start Free →</a>
+        <a href="/login" style={styles.cta}>Start Free →</a>
       </div>
     </nav>
   )
