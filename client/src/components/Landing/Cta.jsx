@@ -64,7 +64,8 @@ export default function Cta() {
       </p>
 
       <div style={{ display: 'flex', gap: '12px', position: 'relative', zIndex: 1 }}>
-        <a href="#" style={{
+        {/* ── changed href to /signup ── */}
+        <a href="/signup" style={{
           fontFamily: 'var(--display)', fontSize: '24px',
           letterSpacing: '0.06em',
           padding: '18px 48px',
@@ -79,6 +80,7 @@ export default function Cta() {
         >
           START FREE →
         </a>
+
         <a href="#" style={{
           fontFamily: 'var(--display)', fontSize: '24px',
           letterSpacing: '0.06em',
