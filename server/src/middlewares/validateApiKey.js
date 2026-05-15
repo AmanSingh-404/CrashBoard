@@ -1,4 +1,4 @@
-const Project = require('../models/Project')
+const Project = require('../models/Project.models.js')
 
 // validates the API key from the URL and attaches the project to req
 // used by the ingest endpoint: POST /api/ingest/:apiKey

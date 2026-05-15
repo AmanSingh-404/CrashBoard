@@ -26,12 +26,12 @@ app.get('/api/health', (req, res) => {
 })
 
 // ── Routes
-app.use('/api/auth',     require('./src/routes/auth.routes'))
-app.use('/api/projects', require('./src/routes/project.routes'))
-app.use('/api/ingest',   require('./src/routes/ingest.routes'))
-app.use('/api/errors',   require('./src/routes/error.routes'))
-app.use('/api/alerts',   require('./src/routes/alert.routes'))
-app.use('/api/team',     require('./src/routes/team.routes'))
+app.use('/api/auth',     require('./src/routes/auth.routes.js'))
+app.use('/api/projects', require('./src/routes/project.routes.js'))
+app.use('/api/ingest',   require('./src/routes/ingest.routes.js'))
+app.use('/api/errors',   require('./src/routes/error.routes.js'))
+app.use('/api/alerts',   require('./src/routes/alert.routes.js'))
+app.use('/api/team',     require('./src/routes/team.routes.js'))
 
 // ── Global error handler (must be last)
 app.use(errorHandler)
