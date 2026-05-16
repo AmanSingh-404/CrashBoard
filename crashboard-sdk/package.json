@@ -1,19 +1,20 @@
 {
   "name": "crashboard-sdk",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Real-time error monitoring SDK for CrashBoard",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c",
+    "dev": "rollup -c --watch"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "keywords": ["error-monitoring", "crash-reporting", "sdk"],
+  "author": "Aman Singh",
+  "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^29.0.2",
-    "@rollup/plugin-node-resolve": "^16.0.3",
-    "@rollup/plugin-terser": "^1.0.0",
-    "rollup": "^4.60.3"
+    "rollup": "^4.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-terser": "^0.4.0"
   }
 }
