@@ -1,7 +1,20 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Landing  from './pages/Landing'
-import Auth     from './pages/Auth'
-import NotFound from './pages/NotFound'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Landing      from './pages/Landing'
+import Auth         from './pages/Auth'
+import NotFound     from './pages/NotFound'
+import DashboardLayout from './components/dashboard/DashboardLayout'
+import Dashboard    from './pages/dashboard/Dashboard'
+import AllErrors    from './pages/dashboard/AllErrors'
+import ErrorDetail  from './pages/dashboard/ErrorDetail'
+import Analytics    from './pages/dashboard/Analytics'
+import Settings     from './pages/dashboard/Settings'
+import useAuthStore from './store/authStore'
+
+// protects routes — redirects to login if not authenticated
+function PrivateRoute({ children }) {
+  const token = useAuthStore(s => s.token)
+  return token ? children : <Navigate to="/login" replace />
+}
 
 function App() {
   return (
@@ -10,7 +23,21 @@ function App() {
         <Route path="/"       element={<Landing />} />
         <Route path="/login"  element={<Auth />} />
         <Route path="/signup" element={<Auth />} />
-        <Route path="*"       element={<NotFound />} />
+
+        {/* protected dashboard routes */}
+        <Route path="/dashboard" element={
+          <PrivateRoute>
+            <DashboardLayout />
+          </PrivateRoute>
+        }>
+          <Route index                element={<Dashboard />} />
+          <Route path="errors"        element={<AllErrors />} />
+          <Route path="errors/:id"    element={<ErrorDetail />} />
+          <Route path="analytics"     element={<Analytics />} />
+          <Route path="settings"      element={<Settings />} />
+        </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
