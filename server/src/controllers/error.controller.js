@@ -265,6 +265,58 @@ const getAnalytics = async (req, res, next) => {
   }
 }
 
+const { explainError } = require('../services/gemini.service')
+
+// ── AI EXPLAIN ERROR
+// POST /api/errors/:projectId/:errorId/explain
+const explainErrorAI = async (req, res, next) => {
+  try {
+    const { projectId, errorId } = req.params
+
+    // check project access
+    const project = await Project.findById(projectId)
+    if (!project) {
+      return res.status(404).json({ success: false, message: 'Project not found' })
+    }
+    if (!hasAccess(project, req.user._id)) {
+      return res.status(403).json({ success: false, message: 'Access denied' })
+    }
+
+    // find the error
+    const error = await ErrorModel.findOne({ _id: errorId, project: projectId })
+    if (!error) {
+      return res.status(404).json({ success: false, message: 'Error not found' })
+    }
+
+    // if AI already explained this error, return cached result
+    // no need to call Gemini API again and waste quota
+    if (error.aiExplanation?.cause) {
+      console.log('[AI] Returning cached explanation')
+      return res.status(200).json({
+        success:     true,
+        cached:      true,
+        explanation: error.aiExplanation,
+      })
+    }
+
+    // call Gemini API
+    console.log('[AI] Calling Gemini for:', error.type, error.message)
+    const explanation = await explainError(error.type, error.message, error.stack)
+
+    // save explanation to DB so we don't call API again
+    error.aiExplanation = explanation
+    await error.save()
+
+    res.status(200).json({
+      success:     true,
+      cached:      false,
+      explanation,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   getErrors,
   getError,
@@ -272,4 +324,5 @@ module.exports = {
   assignError,
   deleteError,
   getAnalytics,
+  explainErrorAI,
 }

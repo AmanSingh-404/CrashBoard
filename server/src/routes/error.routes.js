@@ -9,23 +9,25 @@ const {
   assignError,
   deleteError,
   getAnalytics,
+  explainErrorAI,       // ← add this
 } = require('../controllers/error.controller')
 
-// all error routes require login
 router.use(protect)
 
-// analytics must come BEFORE /:projectId/:errorId
-// otherwise Express mistakes 'analytics' for an errorId
+// analytics route first
 router.get('/:projectId/analytics', getAnalytics)
 
 router.route('/:projectId')
-  .get(getErrors)          // GET /api/errors/:projectId
+  .get(getErrors)
 
 router.route('/:projectId/:errorId')
-  .get(getError)           // GET    /api/errors/:projectId/:errorId
-  .delete(deleteError)     // DELETE /api/errors/:projectId/:errorId
+  .get(getError)
+  .delete(deleteError)
 
-router.patch('/:projectId/:errorId/status', updateErrorStatus)  // PATCH /api/errors/:projectId/:errorId/status
-router.patch('/:projectId/:errorId/assign', assignError)        // PATCH /api/errors/:projectId/:errorId/assign
+router.patch('/:projectId/:errorId/status', updateErrorStatus)
+router.patch('/:projectId/:errorId/assign', assignError)
+
+// ── AI explainer ── (add this line)
+router.post('/:projectId/:errorId/explain', explainErrorAI)
 
 module.exports = router
