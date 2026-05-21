@@ -1,5 +1,5 @@
 const Alert   = require('../models/Alert')
-const Project = require('../models/Project')
+const Project = require('../models/Project.models')
 
 // ── CREATE ALERT
 // POST /api/alerts/:projectId

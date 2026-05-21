@@ -1,13 +1,13 @@
 const express    = require('express')
 const router     = express.Router()
-const { protect } = require('../middleware/auth')
+const { protect } = require('../middlewares/auth.middleware')
 const {
   createAlert,
   getAlerts,
   updateAlert,
   deleteAlert,
   toggleAlert,
-} = require('../controllers/alert.controller')
+} = require('../controllers/alert.controller.js')
 
 router.use(protect)
 
