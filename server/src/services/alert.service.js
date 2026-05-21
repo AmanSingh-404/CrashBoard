@@ -1,7 +1,7 @@
 const nodemailer  = require('nodemailer')
 const axios       = require('axios')
 const Alert       = require('../models/Alert')
-const ErrorModel  = require('../models/Error')
+const ErrorModel  = require('../models/Error.models')
 const { EMAIL_USER, EMAIL_PASS } = require('../config/env')
 
 // ── create nodemailer transporter

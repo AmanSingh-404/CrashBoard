@@ -1,4 +1,4 @@
-const ErrorModel              = require('../models/Error')
+const ErrorModel              = require('../models/Error.models.js')
 const { generateFingerprint } = require('../services/fingerprint.service')
 const { parseUserAgent }      = require('../utils/parseUserAgent')
 const { checkAndFireAlerts }  = require('../services/alert.service')
