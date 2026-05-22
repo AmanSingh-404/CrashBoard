@@ -9,13 +9,15 @@ const {
   assignError,
   deleteError,
   getAnalytics,
-  explainErrorAI,       // ← add this
+  explainErrorAI,
+  getPerformance,       
 } = require('../controllers/error.controller')
 
 router.use(protect)
 
 // analytics route first
 router.get('/:projectId/analytics', getAnalytics)
+router.get('/:projectId/performance', getPerformance)
 
 router.route('/:projectId')
   .get(getErrors)
@@ -27,7 +29,7 @@ router.route('/:projectId/:errorId')
 router.patch('/:projectId/:errorId/status', updateErrorStatus)
 router.patch('/:projectId/:errorId/assign', assignError)
 
-// ── AI explainer ── (add this line)
+// ── AI explainer ── 
 router.post('/:projectId/:errorId/explain', explainErrorAI)
 
 module.exports = router

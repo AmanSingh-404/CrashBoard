@@ -4,10 +4,12 @@ import useAuthStore from '../../store/authStore'
 import api from '../../api/axiosInstance'
 
 const NAV = [
-  { to: '/dashboard',           icon: 'ti-layout-dashboard', label: 'Dashboard'      },
-  { to: '/dashboard/errors',    icon: 'ti-alert-triangle',   label: 'All Errors'     },
-  { to: '/dashboard/analytics', icon: 'ti-chart-bar',        label: 'Analytics'      },
-  { to: '/dashboard/settings',  icon: 'ti-settings',         label: 'Settings'       },
+  { to: '/dashboard',              icon: 'ti-layout-dashboard', label: 'Dashboard'    },
+  { to: '/dashboard/errors',       icon: 'ti-alert-triangle',   label: 'All Errors'   },
+  { to: '/dashboard/analytics',    icon: 'ti-chart-bar',        label: 'Analytics'    },
+  { to: '/dashboard/performance',  icon: 'ti-trending-up',      label: 'Performance'  },
+  { to: '/dashboard/team',         icon: 'ti-users',            label: 'Team'         },
+  { to: '/dashboard/settings',     icon: 'ti-settings',         label: 'Settings'     },
 ]
 
 export default function Sidebar() {

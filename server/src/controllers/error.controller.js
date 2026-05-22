@@ -317,6 +317,125 @@ const explainErrorAI = async (req, res, next) => {
   }
 }
 
+// ── GET PERFORMANCE DATA
+// GET /api/errors/:projectId/performance
+const getPerformance = async (req, res, next) => {
+  try {
+    const { projectId } = req.params
+
+    const project = await Project.findById(projectId)
+    if (!project) {
+      return res.status(404).json({ success: false, message: 'Project not found' })
+    }
+    if (!hasAccess(project, req.user._id)) {
+      return res.status(403).json({ success: false, message: 'Access denied' })
+    }
+
+    // only look at errors that have web vitals data
+    const errorsWithVitals = await ErrorModel.find({
+      project:          projectId,
+      'webVitals.lcp':  { $exists: true, $gt: 0 },
+    }).select('webVitals url browser createdAt').sort({ createdAt: -1 }).limit(100)
+
+    if (errorsWithVitals.length === 0) {
+      return res.status(200).json({
+        success: true,
+        performance: {
+          avgLcp:  0, avgFcp:  0,
+          avgCls:  0, avgTtfb: 0,
+          scores:  [],
+          history: [],
+          byPage:  [],
+        },
+      })
+    }
+
+    // calculate averages
+    const avg = (arr, key) => {
+      const vals = arr.map(e => e.webVitals[key]).filter(v => v > 0)
+      return vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : 0
+    }
+
+    const avgLcp  = avg(errorsWithVitals, 'lcp')
+    const avgFcp  = avg(errorsWithVitals, 'fcp')
+    const avgCls  = parseFloat((errorsWithVitals.reduce((sum, e) => sum + (e.webVitals.cls || 0), 0) / errorsWithVitals.length).toFixed(3))
+    const avgTtfb = avg(errorsWithVitals, 'ttfb')
+
+    // score each metric — based on Google's Core Web Vitals thresholds
+    const scoreLcp  = avgLcp  <= 2500 ? 'good' : avgLcp  <= 4000 ? 'needs-improvement' : 'poor'
+    const scoreFcp  = avgFcp  <= 1800 ? 'good' : avgFcp  <= 3000 ? 'needs-improvement' : 'poor'
+    const scoreCls  = avgCls  <= 0.1  ? 'good' : avgCls  <= 0.25  ? 'needs-improvement' : 'poor'
+    const scoreTtfb = avgTtfb <= 800  ? 'good' : avgTtfb <= 1800  ? 'needs-improvement' : 'poor'
+
+    // vitals history over last 7 days
+    const history = await ErrorModel.aggregate([
+      {
+        $match: {
+          project:         project._id,
+          'webVitals.lcp': { $exists: true, $gt: 0 },
+          createdAt:       { $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
+        },
+      },
+      {
+        $group: {
+          _id:     { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          avgLcp:  { $avg: '$webVitals.lcp' },
+          avgFcp:  { $avg: '$webVitals.fcp' },
+          avgTtfb: { $avg: '$webVitals.ttfb' },
+          count:   { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ])
+
+    // breakdown by page URL
+    const byPage = await ErrorModel.aggregate([
+      {
+        $match: {
+          project:         project._id,
+          'webVitals.lcp': { $exists: true, $gt: 0 },
+          url:             { $ne: '' },
+        },
+      },
+      {
+        $group: {
+          _id:     '$url',
+          avgLcp:  { $avg: '$webVitals.lcp' },
+          avgFcp:  { $avg: '$webVitals.fcp' },
+          avgCls:  { $avg: '$webVitals.cls' },
+          count:   { $sum: 1 },
+        },
+      },
+      { $sort: { avgLcp: -1 } },
+      { $limit: 5 },
+    ])
+
+    res.status(200).json({
+      success: true,
+      performance: {
+        avgLcp, avgFcp, avgCls, avgTtfb,
+        scores: { lcp: scoreLcp, fcp: scoreFcp, cls: scoreCls, ttfb: scoreTtfb },
+        history: history.map(h => ({
+          date:    h._id,
+          avgLcp:  Math.round(h.avgLcp),
+          avgFcp:  Math.round(h.avgFcp),
+          avgTtfb: Math.round(h.avgTtfb),
+          count:   h.count,
+        })),
+        byPage: byPage.map(p => ({
+          url:    p._id,
+          avgLcp: Math.round(p.avgLcp),
+          avgFcp: Math.round(p.avgFcp),
+          avgCls: parseFloat(p.avgCls.toFixed(3)),
+          count:  p.count,
+        })),
+      },
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   getErrors,
   getError,
@@ -325,4 +444,5 @@ module.exports = {
   deleteError,
   getAnalytics,
   explainErrorAI,
+  getPerformance,
 }
