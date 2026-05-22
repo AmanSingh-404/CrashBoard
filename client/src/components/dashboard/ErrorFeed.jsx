@@ -3,34 +3,35 @@ import { useNavigate } from 'react-router-dom'
 import AiExplainer from './AiExplainer'
 import api from '../../api/axiosInstance'
 import useErrorStore from '../../store/errorStore'
+import Comments from './Comments'
 
 const SEV_COLOR = {
-  TypeError:          '#e8000d',
-  NetworkError:       '#ffaa00',
-  ReferenceError:     'var(--color-text-info)',
-  UnhandledPromise:   'var(--color-text-secondary)',
-  SyntaxError:        '#ff6600',
+  TypeError: '#e8000d',
+  NetworkError: '#ffaa00',
+  ReferenceError: 'var(--color-text-info)',
+  UnhandledPromise: 'var(--color-text-secondary)',
+  SyntaxError: '#ff6600',
 }
 
 const STATUS_STYLE = {
-  open:     { bg: 'var(--color-background-danger)',  color: 'var(--color-text-danger)'  },
+  open: { bg: 'var(--color-background-danger)', color: 'var(--color-text-danger)' },
   resolved: { bg: 'var(--color-background-success)', color: 'var(--color-text-success)' },
-  ignored:  { bg: 'var(--color-background-secondary)', color: 'var(--color-text-secondary)' },
+  ignored: { bg: 'var(--color-background-secondary)', color: 'var(--color-text-secondary)' },
 }
 
 function timeAgo(date) {
   const s = Math.floor((Date.now() - new Date(date)) / 1000)
-  if (s < 60)   return `${s}s ago`
+  if (s < 60) return `${s}s ago`
   if (s < 3600) return `${Math.floor(s / 60)}m ago`
-  if (s < 86400)return `${Math.floor(s / 3600)}h ago`
+  if (s < 86400) return `${Math.floor(s / 3600)}h ago`
   return `${Math.floor(s / 86400)}d ago`
 }
 
 export default function ErrorFeed({ errors, projectId, loading }) {
-  const [expanded,    setExpanded]    = useState(null)
-  const [filter,      setFilter]      = useState('all')
-  const updateStatus                  = useErrorStore(s => s.updateErrorStatus)
-  const navigate                      = useNavigate()
+  const [expanded, setExpanded] = useState(null)
+  const [filter, setFilter] = useState('all')
+  const updateStatus = useErrorStore(s => s.updateErrorStatus)
+  const navigate = useNavigate()
 
   const FILTERS = ['all', 'open', 'resolved', 'ignored']
 
@@ -119,8 +120,8 @@ export default function ErrorFeed({ errors, projectId, loading }) {
         )}
 
         {filtered.map(err => {
-          const isOpen    = expanded === err._id
-          const sevColor  = SEV_COLOR[err.type] || 'var(--color-text-secondary)'
+          const isOpen = expanded === err._id
+          const sevColor = SEV_COLOR[err.type] || 'var(--color-text-secondary)'
           const statusSty = STATUS_STYLE[err.status] || STATUS_STYLE.open
 
           return (
@@ -234,6 +235,52 @@ export default function ErrorFeed({ errors, projectId, loading }) {
                     </div>
                   )}
 
+                  {/* Breadcrumbs */}
+                  {err.breadcrumbs?.length > 0 && (
+                    <div style={{ marginBottom: '10px' }}>
+                      <div style={{
+                        fontSize: '11px', fontWeight: 500,
+                        color: 'var(--color-text-secondary)',
+                        letterSpacing: '.06em', textTransform: 'uppercase',
+                        marginBottom: '8px',
+                        display: 'flex', alignItems: 'center', gap: '6px',
+                      }}>
+                        <i className="ti ti-timeline" style={{ fontSize: '13px' }} aria-hidden="true" />
+                        Session replay · last {err.breadcrumbs.length} actions
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        {err.breadcrumbs.map((b, i) => (
+                          <div key={i} style={{
+                            display: 'flex', alignItems: 'center', gap: '8px',
+                            fontSize: '11px', color: 'var(--color-text-secondary)',
+                          }}>
+                            <div style={{
+                              width: '20px', height: '20px', borderRadius: '50%',
+                              background: 'var(--color-background-primary)',
+                              border: '0.5px solid var(--color-border-tertiary)',
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              fontSize: '9px', fontWeight: 500, flexShrink: 0,
+                              color: 'var(--color-text-secondary)',
+                            }}>
+                              {err.breadcrumbs.length - i}
+                            </div>
+                            <span style={{
+                              padding: '1px 6px',
+                              background: 'var(--color-background-primary)',
+                              border: '0.5px solid var(--color-border-tertiary)',
+                              borderRadius: '4px', fontSize: '10px',
+                              color: 'var(--color-text-secondary)',
+                              flexShrink: 0,
+                            }}>
+                              {b.type}
+                            </span>
+                            <span>{b.message}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   {/* Action buttons */}
                   <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', flexWrap: 'wrap' }}>
                     {err.status !== 'resolved' && (
@@ -306,6 +353,10 @@ export default function ErrorFeed({ errors, projectId, loading }) {
 
                   {/* AI Explainer */}
                   <AiExplainer projectId={projectId} error={err} />
+
+                  {/* Comments */}
+                  <Comments projectId={projectId} errorId={err._id} />
+
                 </div>
               )}
             </div>
