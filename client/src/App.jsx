@@ -10,6 +10,7 @@ import Analytics    from './components/dashboard/Analytics'
 import Settings     from './components/dashboard/Settings'
 import useAuthStore from './store/authStore'
 import Team from './pages/dashboard/Team'
+import Performance from './pages/dashboard/Performance'
 
 // protects routes — redirects to login if not authenticated
 function PrivateRoute({ children }) {
@@ -37,6 +38,7 @@ function App() {
           <Route path="analytics"     element={<Analytics />} />
           <Route path="settings"      element={<Settings />} />
           <Route path="team"      element={<Team />} />
+          <Route path="performance" element={<Performance />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
