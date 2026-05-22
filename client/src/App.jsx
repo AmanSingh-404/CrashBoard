@@ -9,6 +9,7 @@ import ErrorDetail  from './components/dashboard/ErrorDetail'
 import Analytics    from './components/dashboard/Analytics'
 import Settings     from './components/dashboard/Settings'
 import useAuthStore from './store/authStore'
+import Team from './pages/dashboard/Team'
 
 // protects routes — redirects to login if not authenticated
 function PrivateRoute({ children }) {
@@ -35,6 +36,7 @@ function App() {
           <Route path="errors/:id"    element={<ErrorDetail />} />
           <Route path="analytics"     element={<Analytics />} />
           <Route path="settings"      element={<Settings />} />
+          <Route path="team"      element={<Team />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
