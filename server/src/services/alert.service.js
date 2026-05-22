@@ -170,4 +170,52 @@ const checkAndFireAlerts = async (project, error) => {
   }
 }
 
-module.exports = { checkAndFireAlerts, sendEmailAlert, sendSlackAlert }
+// ── send team invite email
+const sendInviteEmail = async (toEmail, inviterName, projectName, inviteToken) => {
+  const inviteUrl = `${process.env.CLIENT_URL}/invite/${inviteToken}`
+
+  const html = `
+    <div style="font-family: monospace; max-width: 600px; margin: 0 auto;">
+      <div style="background: #0b0c0e; padding: 20px; border-radius: 4px 4px 0 0;">
+        <h1 style="color: #e8000d; margin: 0; font-size: 24px; letter-spacing: 0.04em;">
+          CRASH/BOARD
+        </h1>
+        <p style="color: rgba(255,255,255,0.4); margin: 4px 0 0; font-size: 12px;">
+          Team Invitation
+        </p>
+      </div>
+      <div style="background: #f2efe8; padding: 24px; border: 1px solid #e0e0e0;">
+        <p style="font-size: 15px; color: #0b0c0e; margin: 0 0 16px;">
+          <strong>${inviterName}</strong> has invited you to join
+          <strong>${projectName}</strong> on CrashBoard.
+        </p>
+        <p style="font-size: 13px; color: #3a3a3a; margin: 0 0 24px;">
+          CrashBoard is a real-time error monitoring platform. Once you join,
+          you'll be able to view errors, add comments, and help resolve issues
+          for this project.
+        </p>
+        <a href="${inviteUrl}"
+          style="display: inline-block; background: #e8000d; color: #fff;
+          padding: 12px 24px; text-decoration: none; font-size: 13px;
+          font-weight: bold; border-radius: 2px; letter-spacing: 0.06em;">
+          → ACCEPT INVITATION
+        </a>
+        <p style="font-size: 11px; color: #888; margin: 16px 0 0;">
+          This invite link expires in 24 hours.
+          If you didn't expect this email, you can ignore it.
+        </p>
+      </div>
+    </div>
+  `
+
+  await transporter.sendMail({
+    from:    `"CrashBoard 🚨" <${EMAIL_USER}>`,
+    to:      toEmail,
+    subject: `You've been invited to ${projectName} on CrashBoard`,
+    html,
+  })
+
+  console.log(`📧 Invite email sent to ${toEmail}`)
+}
+
+module.exports = { checkAndFireAlerts, sendEmailAlert, sendSlackAlert, sendInviteEmail }
