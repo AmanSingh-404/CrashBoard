@@ -14,6 +14,7 @@ export default function Landing() {
 
   // ── Custom cursor
   useEffect(() => {
+    document.body.classList.add('has-custom-cursor')
     const cursor = document.getElementById('cursor')
     if (!cursor) return
     const move = e => {
@@ -21,7 +22,10 @@ export default function Landing() {
       cursor.style.top  = e.clientY + 'px'
     }
     document.addEventListener('mousemove', move)
-    return () => document.removeEventListener('mousemove', move)
+    return () => {
+      document.body.classList.remove('has-custom-cursor')
+      document.removeEventListener('mousemove', move)
+    }
   }, [])
 
   // ── Scroll reveal — watches all .sr / .sr-left / .sr-right elements

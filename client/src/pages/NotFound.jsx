@@ -227,15 +227,6 @@ export default function NotFound() {
     return () => window.removeEventListener('keydown', handler)
   }, [])
 
-  /* ── cursor ── */
-  useEffect(() => {
-    const cur = document.getElementById('cursor')
-    if (!cur) return
-    const move = (e) => { cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px' }
-    document.addEventListener('mousemove', move)
-    return () => document.removeEventListener('mousemove', move)
-  }, [])
-
   const glitchPositions = ['12%', '28%', '55%', '71%', '89%']
 
   return (
@@ -243,7 +234,7 @@ export default function NotFound() {
       background: '#080a0c', color: '#fff',
       fontFamily: "'Archivo', sans-serif",
       height: '100vh', display: 'flex', flexDirection: 'column',
-      overflow: 'hidden', cursor: 'none',
+      overflow: 'hidden',
     }}>
 
       {/* ── Google Fonts ── */}
@@ -560,7 +551,7 @@ export default function NotFound() {
               padding: '12px 24px',
               background: 'var(--red)', color: '#fff',
               fontFamily: 'var(--display)', fontSize: '18px', letterSpacing: '0.06em',
-              textDecoration: 'none', cursor: 'none',
+              textDecoration: 'none', cursor: 'pointer',
               border: '2px solid var(--red)',
               transition: 'background 0.15s, transform 0.15s',
               flexShrink: 0,
@@ -574,7 +565,7 @@ export default function NotFound() {
               background: 'transparent', color: 'rgba(255,255,255,0.35)',
               fontFamily: 'var(--mono)', fontSize: '11px',
               letterSpacing: '0.08em', textTransform: 'uppercase',
-              textDecoration: 'none', cursor: 'none',
+              textDecoration: 'none', cursor: 'pointer',
               border: '1px solid rgba(255,255,255,0.1)',
               transition: 'border-color 0.15s, color 0.15s',
               flexShrink: 0,
@@ -589,7 +580,7 @@ export default function NotFound() {
               style={{
                 fontFamily: 'var(--mono)', fontSize: '11px',
                 letterSpacing: '0.08em', textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.2)', textDecoration: 'none', cursor: 'none',
+                color: 'rgba(255,255,255,0.2)', textDecoration: 'none', cursor: 'pointer',
                 transition: 'color 0.15s', padding: '12px 8px',
               }}
             >

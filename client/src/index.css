@@ -29,7 +29,14 @@ body {
   color: var(--ink);
   font-family: var(--body);
   overflow-x: hidden;
+}
+
+body.has-custom-cursor {
   cursor: none;
+}
+
+body.has-custom-cursor * {
+  cursor: none !important;
 }
 
 /* ── CUSTOM CURSOR ── */
