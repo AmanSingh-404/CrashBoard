@@ -250,7 +250,7 @@ export default function Settings() {
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Topbar title="Settings" />
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px', maxWidth: '780px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px', width: '100%', minWidth: 0 }}>
 
         {/* ── PROFILE ── */}
         <SectionTitle>Profile</SectionTitle>
