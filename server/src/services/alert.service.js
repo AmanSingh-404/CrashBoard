@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 
 // ── send email alert
 const sendEmailAlert = async (to, error, project, occurrences) => {
-  const subject = `🚨 [CrashBoard] ${error.type} fired ${occurrences}× in ${project.name}`
+  const subject = ` [CrashBoard] ${error.type} fired ${occurrences}× in ${project.name}`
 
   const html = `
     <div style="font-family: monospace; max-width: 600px; margin: 0 auto;">
@@ -40,10 +40,10 @@ const sendEmailAlert = async (to, error, project, occurrences) => {
             ${error.message}
           </div>
           <div style="display: flex; gap: 16px; font-size: 11px; color: #888;">
-            <span>🔁 ${occurrences} occurrences</span>
-            <span>👤 ${error.affectedUsers} users affected</span>
-            <span>🌐 ${error.browser || 'Unknown'}</span>
-            <span>⚙️ ${error.environment}</span>
+            <span> ${occurrences} occurrences</span>
+            <span> ${error.affectedUsers} users affected</span>
+            <span> ${error.browser || 'Unknown'}</span>
+            <span> ${error.environment}</span>
           </div>
         </div>
 
@@ -67,19 +67,19 @@ const sendEmailAlert = async (to, error, project, occurrences) => {
   `
 
   await transporter.sendMail({
-    from:    `"CrashBoard 🚨" <${EMAIL_USER}>`,
+    from:    `"CrashBoard " <${EMAIL_USER}>`,
     to,
     subject,
     html,
   })
 
-  console.log(`📧 Alert email sent to ${to}`)
+  console.log(` Alert email sent to ${to}`)
 }
 
 // ── send Slack alert
 const sendSlackAlert = async (webhookUrl, error, project, occurrences) => {
   const payload = {
-    text: `🚨 *CrashBoard Alert — ${project.name}*`,
+    text: ` *CrashBoard Alert — ${project.name}*`,
     attachments: [
       {
         color: '#e8000d',
@@ -97,7 +97,7 @@ const sendSlackAlert = async (webhookUrl, error, project, occurrences) => {
   }
 
   await axios.post(webhookUrl, payload)
-  console.log(`💬 Slack alert sent to webhook`)
+  console.log(` Slack alert sent to webhook`)
 }
 
 // ── main function — called after every error ingest
@@ -120,7 +120,7 @@ const checkAndFireAlerts = async (project, error) => {
       if (alert.lastFiredAt) {
         const minutesSinceLastFire = (Date.now() - new Date(alert.lastFiredAt)) / 60000
         if (minutesSinceLastFire < alert.cooldownMinutes) {
-          console.log(`⏳ Alert ${alert._id} in cooldown (${Math.round(minutesSinceLastFire)}/${alert.cooldownMinutes} mins)`)
+          console.log(` Alert ${alert._id} in cooldown (${Math.round(minutesSinceLastFire)}/${alert.cooldownMinutes} mins)`)
           continue
         }
       }
@@ -147,7 +147,7 @@ const checkAndFireAlerts = async (project, error) => {
 
       // fire if threshold exceeded
       if (occurrences >= alert.threshold) {
-        console.log(`🔔 Alert firing! ${error.type} hit ${occurrences}× (threshold: ${alert.threshold})`)
+        console.log(` Alert firing! ${error.type} hit ${occurrences}× (threshold: ${alert.threshold})`)
 
         // send email
         if (alert.emailEnabled && alert.emailTo) {
@@ -209,13 +209,13 @@ const sendInviteEmail = async (toEmail, inviterName, projectName, inviteToken) =
   `
 
   await transporter.sendMail({
-    from:    `"CrashBoard 🚨" <${EMAIL_USER}>`,
+    from:    `"CrashBoard " <${EMAIL_USER}>`,
     to:      toEmail,
     subject: `You've been invited to ${projectName} on CrashBoard`,
     html,
   })
 
-  console.log(`📧 Invite email sent to ${toEmail}`)
+  console.log(`Invite email sent to ${toEmail}`)
 }
 
 module.exports = { checkAndFireAlerts, sendEmailAlert, sendSlackAlert, sendInviteEmail }

@@ -32,7 +32,7 @@ const ingestError = async (req, res, next) => {
       if (breadcrumbs.length > 0) existingError.breadcrumbs = breadcrumbs
       await existingError.save()
       savedError = existingError
-      console.log(`📊 Duplicate error grouped: ${type} (${existingError.occurrences} times)`)
+      console.log(`Duplicate error grouped: ${type} (${existingError.occurrences} times)`)
     } else {
       savedError = await ErrorModel.create({
         project: project._id,
@@ -42,7 +42,7 @@ const ingestError = async (req, res, next) => {
         firstSeenAt: new Date(),
         lastSeenAt:  new Date(),
       })
-      console.log(`🚨 New error captured: ${type} — ${message}`)
+      console.log(`New error captured: ${type} — ${message}`)
     }
 
     // broadcast live to dashboard
