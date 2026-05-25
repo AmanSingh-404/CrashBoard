@@ -11,6 +11,10 @@ import Settings     from './components/dashboard/Settings'
 import useAuthStore from './store/authStore'
 import Team from './pages/dashboard/Team'
 import Performance from './pages/dashboard/Performance'
+import Features from './pages/Features'
+import Sdk      from './pages/Sdk'
+import Pricing  from './pages/Pricing'
+import Docs     from './pages/Docs'
 
 // protects routes — redirects to login if not authenticated
 function PrivateRoute({ children }) {
@@ -40,6 +44,10 @@ function App() {
           <Route path="team"      element={<Team />} />
           <Route path="performance" element={<Performance />} />
         </Route>
+        <Route path="/features" element={<Features />} />
+        <Route path="/sdk"      element={<Sdk />} />
+        <Route path="/pricing"  element={<Pricing />} />
+        <Route path="/docs"     element={<Docs />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

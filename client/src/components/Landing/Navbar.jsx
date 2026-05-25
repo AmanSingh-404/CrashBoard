@@ -73,10 +73,10 @@ export default function Navbar() {
 
       {/* Nav Links */}
       <div style={styles.links}>
-        <a href="#features" style={{ ...linkStyle, borderLeft: '1px solid var(--rule)' }}>Features</a>
-        <a href="#sdk"      style={linkStyle}>SDK</a>
-        <a href="#pricing"  style={linkStyle}>Pricing</a>
-        <a href="#"         style={linkStyle}>Docs</a>
+        <a href="/features" style={{ ...linkStyle, borderLeft: '1px solid var(--rule)' }}>Features</a>
+        <a href="/sdk"      style={linkStyle}>SDK</a>
+        <a href="/pricing"  style={linkStyle}>Pricing</a>
+        <a href="/docs"     style={linkStyle}>Docs</a>
       </div>
 
       {/* Right side */}
