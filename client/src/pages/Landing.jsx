@@ -56,7 +56,7 @@ export default function Landing() {
       <SdkSection />
       <Numbers />
       <Testimonials />
-      <Pricing />
+      {/* <Pricing /> */}
       <Cta />
       <Footer />
     </>
