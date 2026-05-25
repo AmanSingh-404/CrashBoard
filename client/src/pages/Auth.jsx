@@ -373,7 +373,7 @@ export default function Auth() {
               </Field>
 
               {loginSuccess ? (
-                <SuccessState icon="✅" title="SIGNED IN" msg={"Redirecting to your dashboard...\nErrors are being monitored."} />
+                <SuccessState title="SIGNED IN" msg={"Redirecting to your dashboard...\nErrors are being monitored."} />
               ) : (
                 <button className="cb-btn" onClick={handleLogin} disabled={loginLoading}>
                   {loginLoading ? <span className="cb-spinner" /> : '→ SIGN IN'}
@@ -460,7 +460,7 @@ export default function Auth() {
               {signupErrs.terms && <div style={{ marginBottom:'10px' }}><FieldError>{signupErrs.terms}</FieldError></div>}
 
               {signupSuccess ? (
-                <SuccessState icon="🚨" title="ACCOUNT CREATED" msg={"Welcome to CrashBoard.\nIntegrate your SDK and start monitoring in 3 lines of code."} color="#00e05a" />
+                <SuccessState title="ACCOUNT CREATED" msg={"Welcome to CrashBoard.\nIntegrate your SDK and start monitoring in 3 lines of code."} color="#00e05a" />
               ) : (
                 <button className="cb-btn" onClick={handleSignup} disabled={signupLoading}>
                   {signupLoading ? <span className="cb-spinner" /> : '→ CREATE ACCOUNT'}
