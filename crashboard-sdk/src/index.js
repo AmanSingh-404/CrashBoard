@@ -4,7 +4,7 @@ import { collectWebVitals }                from './webVitals'
 
 const CrashBoard = {
   // CrashBoard.init({ apiKey: 'cb_live_xxx', project: 'my-app', env: 'production' })
-  init({ apiKey, project, env = 'production', ingestUrl = 'http://localhost:5000/api/ingest' }) {
+  init({ apiKey, project, env = 'production', ingestUrl = 'https://crashboard-api.onrender.com/api/ingest' }) {
     if (!apiKey) {
       console.error('[CrashBoard] apiKey is required')
       return
