@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import useAuthStore from '../store/authStore'
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
@@ -68,6 +69,7 @@ function ApiError({ msg }) {
 
 export default function Auth() {
   const navigate = useNavigate()
+  const setAuth = useAuthStore(s => s.setAuth)
 
   /* ── tabs ── */
   const [tab, setTab] = useState('login')
@@ -129,8 +131,7 @@ export default function Auth() {
     setLoginLoading(true); setLoginApiErr('')
     try {
       const { data } = await axios.post(`${API}/auth/login`, { email: loginEmail, password: loginPass })
-      localStorage.setItem('cb_token', data.token)
-      localStorage.setItem('cb_user',  JSON.stringify(data.user))
+      setAuth(data.user, data.token)
       setLoginSuccess(true)
       pushFeed({ s: 'resolved', t: '✓ LOGIN SUCCESS', m: `${loginEmail} · signed in` })
       setTimeout(() => navigate('/dashboard'), 1600)
@@ -149,8 +150,7 @@ export default function Auth() {
     setSignupLoading(true); setSignupApiErr('')
     try {
       const { data } = await axios.post(`${API}/auth/register`, { name: signupName, email: signupEmail, password: signupPass })
-      localStorage.setItem('cb_token', data.token)
-      localStorage.setItem('cb_user',  JSON.stringify(data.user))
+      setAuth(data.user, data.token)
       setSignupSuccess(true)
       pushFeed({ s: 'resolved', t: '✓ NEW USER', m: `${signupEmail} · account created` })
       setTimeout(() => navigate('/dashboard'), 1800)
