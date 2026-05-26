@@ -13,12 +13,11 @@ app.use(morgan('dev'))
 // ── CORS — allow React frontend
 app.use(cors({
   origin: [
-    process.env.CLIENT_URL,
-    'http://localhost:5173',
+    'https://crash-board.vercel.app',
+    'http://localhost:5173'
   ],
   credentials: true,
 }))
-
 // ── Body parsers
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
