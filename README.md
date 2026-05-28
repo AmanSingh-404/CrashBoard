@@ -6,12 +6,12 @@
 
 *A production-grade developer tool that captures crashes, errors, and performance issues from any JavaScript app and surfaces them on a live dashboard — with AI-powered debugging built in.*
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-crashboard--app.vercel.app-e8000d?style=for-the-badge&logo=vercel&logoColor=white)](https://crashboard-app.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-crashboard--app.vercel.app-e8000d?style=for-the-badge&logo=vercel&logoColor=white)](https://crash-board.vercel.app/)
 [![npm](https://img.shields.io/badge/npm-crashboard--sdk-e8000d?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/package/crashboard-sdk)
 [![API Health](https://img.shields.io/badge/API-Live-00e05a?style=for-the-badge&logo=render&logoColor=white)](https://crashboard-api.onrender.com/api/health)
 [![GitHub](https://img.shields.io/badge/GitHub-Source-0b0c0e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/amansingh/crashboard)
 
-![CrashBoard Dashboard](https://via.placeholder.com/1200x600/0b0c0e/e8000d?text=CrashBoard+Dashboard)
+![CrashBoard Dashboard](https://crash-board.vercel.app/)
 
 </div>
 
@@ -29,17 +29,17 @@ CrashBoard is a **mini-Sentry** built entirely from scratch as a full-stack port
 
 | # | Feature | Description | Tech |
 |---|---------|-------------|------|
-| 1 | ** npm SDK** | Published package — 3 lines to integrate | `rollup` · `npm publish` |
-| 2 | ** Real-Time Feed** | Live error streaming to dashboard | `Socket.io` · `<50ms` |
-| 3 | ** AI Explainer** | Gemini reads stack trace, writes the fix | `Gemini 1.5 Flash` |
-| 4 | ** API Key Auth** | Multi-project with UUID-based keys | `JWT` · `UUID v4` |
-| 5 | ** Team Collaboration** | Invite members, comments, assign errors | `Nodemailer` · `Socket.io` |
-| 6 | ** Analytics Dashboard** | Error trends, browser breakdown, resolution rate | `Recharts` |
-| 7 | ** Smart Alerts** | Email + Slack when threshold exceeded | `Nodemailer` · `Axios` |
-| 8 | ** Session Replay** | Last 10 user actions before crash | `PerformanceObserver` |
-| 9 | ** Performance Monitoring** | LCP, FCP, CLS, TTFB tracking | `PerformanceObserver` |
-| 10 | ** Source Map Support** | De-minifies stack traces automatically | `mozilla/source-map` |
-| 11 | ** Error Deduplication** | Groups identical errors, counts occurrences | `MD5 fingerprinting` |
+| 1 | npm SDK | Published package — 3 lines to integrate | `rollup` · `npm publish` |
+| 2 | Real-Time Feed | Live error streaming to dashboard | `Socket.io` · `<50ms` |
+| 3 | AI Explainer | Gemini reads stack trace, writes the fix | `Gemini 1.5 Flash` |
+| 4 | API Key Auth | Multi-project with UUID-based keys | `JWT` · `UUID v4` |
+| 5 | Team Collaboration | Invite members, comments, assign errors | `Nodemailer` · `Socket.io` |
+| 6 | Analytics Dashboard | Error trends, browser breakdown, resolution rate | `Recharts` |
+| 7 | Smart Alerts | Email + Slack when threshold exceeded | `Nodemailer` · `Axios` |
+| 8 | Session Replay | Last 10 user actions before crash | `PerformanceObserver` |
+| 9 | Performance Monitoring | LCP, FCP, CLS, TTFB tracking | `PerformanceObserver` |
+| 10 | Source Map Support | De-minifies stack traces automatically | `mozilla/source-map` |
+| 11 | Error Deduplication | Groups identical errors, counts occurrences | `MD5 fingerprinting` |
 
 ---
 
@@ -382,23 +382,6 @@ The SDK needs to ship in two formats — CommonJS (for Node.js / `require()`) an
 | Backend | Render | https://crashboard-api.onrender.com |
 | Database | MongoDB Atlas | ap-south-1 (Mumbai) |
 | npm Package | npm registry | https://npmjs.com/package/crashboard-sdk |
-
----
-
-##  What I Say in the Interview
-
-> *"I built an error monitoring platform similar to Sentry. It includes a **published npm SDK** that developers integrate with 3 lines of code, a **real-time dashboard** using Socket.io that streams live errors in under 50ms, **API key-based multi-project auth**, error deduplication via MD5 fingerprinting, **session replay breadcrumbs**, Core Web Vitals tracking, source map de-minification using mozilla/source-map, and an **AI layer using Gemini** that explains stack traces and suggests fixes in plain English. The backend is deployed on Render, the frontend on Vercel, and the SDK is published to npm."*
-
----
-
-## 📸 Screenshots
-
-| Page | Description |
-|------|-------------|
-| ![Landing](https://via.placeholder.com/400x225/0b0c0e/e8000d?text=Landing+Page) | Landing page with live error ticker |
-| ![Dashboard](https://via.placeholder.com/400x225/1a1b1e/00e05a?text=Dashboard) | Real-time error dashboard |
-| ![AI Explainer](https://via.placeholder.com/400x225/1a1b1e/c084fc?text=AI+Explainer) | Gemini AI error analysis |
-| ![Analytics](https://via.placeholder.com/400x225/1a1b1e/4d9fff?text=Analytics) | Error analytics charts |
 
 ---
 
