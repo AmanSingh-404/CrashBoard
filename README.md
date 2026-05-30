@@ -11,7 +11,7 @@
 [![API Health](https://img.shields.io/badge/API-Live-00e05a?style=for-the-badge&logo=render&logoColor=white)](https://crashboard-api.onrender.com/api/health)
 [![GitHub](https://img.shields.io/badge/GitHub-Source-0b0c0e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/amansingh/crashboard)
 
-![CrashBoard Dashboard](https://crash-board.vercel.app/)
+![CrashBoard](https://crash-board.vercel.app/)
 
 </div>
 
