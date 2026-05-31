@@ -27,7 +27,7 @@ Capture unhandled errors, promise rejections, network failures, Core Web Vitals,
 ## Requirements
 
 - Node.js 18 or higher (for building)
-- A CrashBoard account — [sign up free](https://crashboard-app.vercel.app/signup)
+- A CrashBoard account — [sign up free](https://crash-board.vercel.app/)
 - A project API key from your CrashBoard Settings page
 
 The SDK runs entirely in the browser. It has zero runtime dependencies and adds less than 5KB to your bundle.

@@ -1,6 +1,6 @@
 {
   "name": "crashboard-sdk",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Real-time error monitoring SDK for CrashBoard",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
